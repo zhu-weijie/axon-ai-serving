@@ -1,3 +1,7 @@
+"""
+For v4 and v5 boards.
+Version: 1.1.0
+"""
 import os
 import time
 import zipfile
