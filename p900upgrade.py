@@ -1,6 +1,6 @@
 """
 For v4 and v5 boards.
-Version: 1.1.0
+Version: 1.1.1
 """
 import os
 import time
@@ -9,6 +9,7 @@ from threading import Timer
 
 VERSION = "1.1.0"
 
+FILE_UPGRADE_FLAG_OLD = "/root/upload/UpgradePending"
 FILE_UPGRADE_FLAG = "/root/upload/upgrade_pending"
 
 FILE_P900MASTER = "/root/upload/p900master.zip"
@@ -86,7 +87,7 @@ def p900upgrade_webserver():
 
 
 def p900upgrade(interval):
-    if os.path.isfile(FILE_UPGRADE_FLAG):
+    if os.path.isfile(FILE_UPGRADE_FLAG) or os.path.isfile(FILE_UPGRADE_FLAG_OLD):
         rename_files()
 
         rt1 = p900upgrade_webserver()

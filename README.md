@@ -1,5 +1,9 @@
 # Change Log
 
+## Version v1.1.1
+
+- Fixed an issue where p900upgrade can not identify the old upgrade flag file.
+
 ## Version v1.1.0
 
 - Added the ability to allow the upgrade file names to contain version numbers and other information, provided that the upgrade file name must include either "p900master" or "p900webserver" to be valid for the upgrade process.
