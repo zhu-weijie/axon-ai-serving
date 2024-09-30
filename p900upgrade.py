@@ -1,13 +1,12 @@
 """
 For v4 and v5 boards.
-Version: 1.1.1
+Version: 1.1.2
 """
 import os
 import time
 import zipfile
 from threading import Timer
 
-VERSION = "1.1.0"
 
 FILE_UPGRADE_FLAG_OLD = "/root/upload/UpgradePending"
 FILE_UPGRADE_FLAG = "/root/upload/upgrade_pending"
@@ -80,6 +79,10 @@ def p900upgrade_webserver():
     time.sleep(1)
 
     os.system("rm -rf /root/tmp_data")
+    os.system("sync")
+    time.sleep(1)
+
+    os.system("cd /root/p900webserver && python manage.py migrate")
     os.system("sync")
     time.sleep(1)
 
