@@ -1,5 +1,9 @@
 # Change Log
 
+## Version v1.1.2
+
+- Added `python manage.py migrate` command to the upgrade process.
+
 ## Version v1.1.1
 
 - Fixed an issue where p900upgrade can not identify the old upgrade flag file.
