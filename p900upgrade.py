@@ -1,6 +1,6 @@
 """
 For v4 and v5 boards.
-Version: 1.1.2
+Version: 1.1.3
 """
 import os
 import time
@@ -61,7 +61,9 @@ def p900upgrade_webserver():
         return False
 
     os.system("mkdir -p /root/tmp_data/{floorplans,script}")
-    os.system("cp -avr /root/p900webserver/media/floorplans/* /root/tmp_data/floorplans")
+    os.system(
+        "cp -avr /root/p900webserver/media/floorplans/* /root/tmp_data/floorplans"
+    )
     os.system("cp -avr /root/p900webserver/script/import/* /root/tmp_data/script")
 
     os.system("rm -rf /root/p900webserver")
@@ -73,7 +75,9 @@ def p900upgrade_webserver():
     os.system("sync")
     time.sleep(1)
 
-    os.system("cp -avr /root/tmp_data/floorplans/* /root/p900webserver/media/floorplans")
+    os.system(
+        "cp -avr /root/tmp_data/floorplans/* /root/p900webserver/media/floorplans"
+    )
     os.system("cp -avr /root/tmp_data/script/* /root/p900webserver/script/import")
     os.system("sync")
     time.sleep(1)
@@ -82,7 +86,37 @@ def p900upgrade_webserver():
     os.system("sync")
     time.sleep(1)
 
+    APPS = [
+        "cardholder",
+        "general",
+        "hardware",
+        "monitoring",
+        "notification",
+        "report",
+        "script",
+        "setting",
+        "useracc",
+    ]
+    copied_files = []
+    for app in APPS:
+        manual_migrations_dir = (
+            f"/root/p900webserver/{app}/migrations/manual_migrations"
+        )
+        migrations_dir = f"/root/p900webserver/{app}/migrations"
+        if os.path.isdir(manual_migrations_dir):
+            for file in glob.glob(f"{manual_migrations_dir}/*.py"):
+                os.system(f"cp {file} {migrations_dir}/")
+                copied_files.append(f"{migrations_dir}/{os.path.basename(file)}")
+
+    os.system("cd /root/p900webserver && python manage.py makemigrations")
     os.system("cd /root/p900webserver && python manage.py migrate")
+    os.system("sync")
+    time.sleep(1)
+
+    for file in copied_files:
+        if os.path.isfile(file):
+            os.system(f"rm {file}")
+
     os.system("sync")
     time.sleep(1)
 
