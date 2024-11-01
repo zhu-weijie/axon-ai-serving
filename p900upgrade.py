@@ -6,6 +6,7 @@ import os
 import time
 import zipfile
 from threading import Timer
+import glob
 
 
 FILE_UPGRADE_FLAG_OLD = "/root/upload/UpgradePending"

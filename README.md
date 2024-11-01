@@ -3,6 +3,7 @@
 ## Version v1.1.3
 
 - Added separate manual migrations.
+- Fixed missing `import glob`.
 
 ## Version v1.1.2
 
