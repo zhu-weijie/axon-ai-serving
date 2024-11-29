@@ -1,5 +1,9 @@
 # Change Log
 
+## Version v1.2.0
+
+- Using upload button to upgrade the system.
+
 ## Version v1.1.3
 
 - Added separate manual migrations.
