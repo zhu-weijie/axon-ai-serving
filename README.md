@@ -1,5 +1,9 @@
 # Change Log
 
+## Version v1.2.1
+
+- Added upload default database.
+
 ## Version v1.2.0
 
 - Using upload button to upgrade the system.

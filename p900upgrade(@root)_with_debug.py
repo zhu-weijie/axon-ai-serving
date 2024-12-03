@@ -207,6 +207,7 @@ def handle_p900webserver():
 def copy_files_and_create_symlink():
     paths = [
         ("/root/upload/bin", "/bin", True),
+        ("/root/upload/database", "/", False),
         ("/root/upload/etc", "/etc/init.d", True),
         ("/root/upload/settings", "/root/settings", True),
         ("/root/upload/root", "/root", False),
