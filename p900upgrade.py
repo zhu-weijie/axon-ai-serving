@@ -1,7 +1,3 @@
-"""
-For v4 and v5 boards.
-Version: 1.2.0
-"""
 import os
 import shutil
 import subprocess
@@ -10,14 +6,13 @@ import zipfile
 import time
 import re
 
+DATABASE_INITIALIZATION_FILE_PATH = "/root/p900scripts/database_initialization.sh"
+
 
 def check_free_space(path, required_space):
     total, used, free = shutil.disk_usage(path)
     return free >= required_space
 
-def get_free_space(path):
-    _, _, free = shutil.disk_usage(path)
-    return free
 
 def unzip_upload():
     zip_pattern = r"^upload.*\.zip$"
@@ -37,8 +32,6 @@ def unzip_upload():
     if os.path.exists(p900webserver_path):
         shutil.rmtree(p900webserver_path)
 
-    free_space_before = get_free_space("/")
-    
     required_space = os.path.getsize(zip_path) * 2
     if not check_free_space("/", required_space):
         return False
@@ -46,11 +39,13 @@ def unzip_upload():
     temp_extract_path = tempfile.mkdtemp()
 
     try:
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
             zip_ref.extractall(temp_extract_path)
 
         top_level_contents = os.listdir(temp_extract_path)
-        if len(top_level_contents) == 1 and os.path.isdir(os.path.join(temp_extract_path, top_level_contents[0])):
+        if len(top_level_contents) == 1 and os.path.isdir(
+            os.path.join(temp_extract_path, top_level_contents[0])
+        ):
             nested_dir = os.path.join(temp_extract_path, top_level_contents[0])
             for item in os.listdir(nested_dir):
                 shutil.move(os.path.join(nested_dir, item), temp_extract_path)
@@ -68,7 +63,9 @@ def unzip_upload():
                         target_dir = os.path.join(dest_path, rel_path)
                         os.makedirs(target_dir, exist_ok=True)
                         for file in files:
-                            shutil.copy2(os.path.join(root, file), os.path.join(target_dir, file))
+                            shutil.copy2(
+                                os.path.join(root, file), os.path.join(target_dir, file)
+                            )
                 else:
                     shutil.copytree(src_path, dest_path)
             else:
@@ -76,10 +73,12 @@ def unzip_upload():
 
         os.remove(zip_path)
 
-        free_space_after = get_free_space("/")
-
         required_files = ["p900master", "p900webserver"]
-        missing_files = [f for f in required_files if not os.path.exists(os.path.join(extract_path, f))]
+        missing_files = [
+            f
+            for f in required_files
+            if not os.path.exists(os.path.join(extract_path, f))
+        ]
 
         if missing_files:
             return False
@@ -94,7 +93,6 @@ def unzip_upload():
             shutil.rmtree(temp_extract_path)
 
     return False
-
 
 
 def copy_and_make_executable(src_dir, dest_dir, make_executable=False):
@@ -131,6 +129,7 @@ def copy_and_make_executable(src_dir, dest_dir, make_executable=False):
         else:
             print(f"DEBUG: Skipping non-file {file_name} in {src_dir}.")
 
+
 def handle_p900master():
     src = "/root/upload/p900master"
     dest = "/root/p900master"
@@ -142,6 +141,7 @@ def handle_p900master():
         shutil.move(src, dest)
 
         os.chmod(dest, 0o755)
+
 
 def handle_p900webserver():
     src = "/root/upload/p900webserver"
@@ -164,10 +164,12 @@ def handle_p900webserver():
 def copy_files_and_create_symlink():
     paths = [
         ("/root/upload/bin", "/bin", True),
-        ("/root/upload/database", "/", False),
         ("/root/upload/etc", "/etc/init.d", True),
-        ("/root/upload/settings", "/root/settings", True),
+        ("/root/upload/p900scripts", "/root/p900scripts", True),
+        ("/root/upload/p900backups", "/root/p900backups", False),
         ("/root/upload/root", "/root", False),
+        ("/root/upload/network", "/etc/network", False),
+        ("/root/upload/nginx", "/etc/nginx", False),
     ]
 
     for src, dest, make_exec in paths:
@@ -182,6 +184,7 @@ def copy_files_and_create_symlink():
     except Exception as e:
         print(f"ERROR: Failed to create symbolic link for busybox nc: {e}")
 
+
 def cleanup_and_reboot():
     upload_dir = "/root/upload"
 
@@ -189,15 +192,15 @@ def cleanup_and_reboot():
         shutil.rmtree(upload_dir)
 
     try:
-        subprocess.run(["reboot"], check=True)
+        subprocess.run([DATABASE_INITIALIZATION_FILE_PATH], check=True)
     except Exception as e:
         print(f"ERROR: Failed to reboot the system: {e}")
+
 
 def main():
     while True:
         try:
             if unzip_upload():
-                
                 handle_p900master()
                 handle_p900webserver()
                 copy_files_and_create_symlink()

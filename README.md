@@ -1,5 +1,10 @@
 # Change Log
 
+## Version v1.2.2
+
+- Added p900backups and p900scripts directories to the upgrade process.
+- Added database initialization to the upgrade process.
+
 ## Version v1.2.1
 
 - Added upload default database.
