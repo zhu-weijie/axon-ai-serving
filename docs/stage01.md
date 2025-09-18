@@ -1,7 +1,5 @@
 ### **Design Initial High-Level Architecture**
 
-**Issue Description:**
-
 *   **Problem:** Before diving into specific implementation details, we need a foundational "walking skeleton" of the system. This initial design establishes the core logical components and their primary interaction patterns for handling a single user request.
 *   **Solution:** Define a high-level architecture with four main logical components:
     1.  **API Gateway:** The single entry point for all client requests.
