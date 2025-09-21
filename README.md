@@ -2,7 +2,7 @@
 
 ## Logical View (C4 Component Diagram)
 
-### Stage 01: Design Initial High-Level Architecture
+### Milestone 01: Design Initial High-Level Architecture
 
 ```mermaid
 C4Component
@@ -24,7 +24,7 @@ C4Component
     Rel_Back(api_gateway, user, "6. Returns response")
 ```
 
-### Stage 02: Design Secure API Gateway with Rate Limiting
+### Milestone 02: Design Secure API Gateway with Rate Limiting
 
 ```mermaid
 C4Component
@@ -49,7 +49,7 @@ C4Component
     Rel_Back(api_gateway, user, "7. Returns response")
 ```
 
-### Stage 03: Design Session Management with In-Memory Caching
+### Milestone 03: Design Session Management with In-Memory Caching
 
 ```mermaid
 C4Component
@@ -73,7 +73,7 @@ C4Component
     Rel(api_gateway, in_memory_cache, "Validates request count", "TCP")
 ```
 
-### Stage 04: Design Decoupled Inference via a Message Queue
+### Milestone 04: Design Decoupled Inference via a Message Queue
 
 ```mermaid
 C4Component
@@ -103,7 +103,7 @@ C4Component
     Rel_Back(api_gateway, user, "")
 ```
 
-### Stage 05: Implement KV Cache Optimization in Inference Service
+### Milestone 05: Implement KV Cache Optimization in Inference Service
 
 ```mermaid
 C4Component
@@ -136,7 +136,7 @@ C4Component
     Rel_Back(api_gateway, user, "")
 ```
 
-### Stage 06: Design Throughput Maximization with Continuous Batching
+### Milestone 06: Design Throughput Maximization with Continuous Batching
 
 ```mermaid
 C4Component
@@ -170,7 +170,7 @@ C4Component
     Rel_Back(api_gateway, user, "")
 ```
 
-### Stage 07: Design Data Persistence with a Write-Ahead Log (WAL)
+### Milestone 07: Design Data Persistence with a Write-Ahead Log (WAL)
 
 ```mermaid
 C4Component
@@ -204,7 +204,7 @@ C4Component
     Rel_Back(api_gateway, user, "")
 ```
 
-### Stage 08: Design Support for Large Models with Tensor Parallelism
+### Milestone 08: Design Support for Large Models with Tensor Parallelism
 
 ```mermaid
 C4Component
@@ -244,7 +244,7 @@ C4Component
     Rel_Back(api_gateway, user, "")
 ```
 
-### Stage 09: Finalize Production Deployment View with High Availability and Observability
+### Milestone 09: Finalize Production Deployment View with High Availability and Observability
 
 ```mermaid
 C4Component
@@ -295,7 +295,7 @@ C4Component
 
 ## Physical View (AWS Deployment Diagram)
 
-### Stage 01: Design Initial High-Level Architecture
+### Milestone 01: Design Initial High-Level Architecture
 
 ```mermaid
 graph TD
@@ -331,7 +331,7 @@ graph TD
     Container2 --> Container3;
 ```
 
-### Stage 02: Design Secure API Gateway with Rate Limiting
+### Milestone 02: Design Secure API Gateway with Rate Limiting
 
 ```mermaid
 graph TD
@@ -370,7 +370,7 @@ graph TD
     Container1 -- TCP --> ElastiCache;
 ```
 
-### Stage 03: Design Session Management with In-Memory Caching
+### Milestone 03: Design Session Management with In-Memory Caching
 
 ```mermaid
 graph TD
@@ -410,7 +410,7 @@ graph TD
     Container2 -- "TCP (Session History)" --> ElastiCache;
 ```
 
-### Stage 04: Design Decoupled Inference via a Message Queue
+### Milestone 04: Design Decoupled Inference via a Message Queue
 
 ```mermaid
 graph TD
@@ -454,7 +454,7 @@ graph TD
     Container3 -- "AMQP" --> MQ;
 ```
 
-### Stage 05: Implement KV Cache Optimization in Inference Service
+### Milestone 05: Implement KV Cache Optimization in Inference Service
 
 ```mermaid
 graph TD
@@ -498,7 +498,7 @@ graph TD
     Container3 -- "AMQP" --> MQ;
 ```
 
-### Stage 06: Design Throughput Maximization with Continuous Batching
+### Milestone 06: Design Throughput Maximization with Continuous Batching
 
 ```mermaid
 graph TD
@@ -542,7 +542,7 @@ graph TD
     Container3 -- "AMQP" --> MQ;
 ```
 
-### Stage 07: Design Data Persistence with a Write-Ahead Log (WAL)
+### Milestone 07: Design Data Persistence with a Write-Ahead Log (WAL)
 
 ```mermaid
 graph TD
@@ -589,7 +589,7 @@ graph TD
     Container2 -- "SQL" --> RDS;
 ```
 
-### Stage 08: Design Support for Large Models with Tensor Parallelism
+### Milestone 08: Design Support for Large Models with Tensor Parallelism
 
 ```mermaid
 graph TD
@@ -650,7 +650,7 @@ graph TD
     Container2 -- "SQL" --> RDS;
 ```
 
-### Stage 09: Finalize Production Deployment View with High Availability and Observability
+### Milestone 09: Finalize Production Deployment View with High Availability and Observability
 
 ```mermaid
 graph LR
